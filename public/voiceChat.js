@@ -19,7 +19,7 @@ async function joinVoiceChannel(channel) {
 
     socket.onmessage = async (event) => {
         const data = JSON.parse(event.data);
-        console.log("Received WebSocket message:", data); // Debugging
+        console.log("Received WebSocket message:", data);
 
         if (data.type === "offer") {
             const peer = createPeerConnection(data.channel);
@@ -51,7 +51,7 @@ function createPeerConnection(channel) {
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
     });
 
-    // Add local stream to peer connection
+   
     if (localStream) {
         localStream.getTracks().forEach(track => peer.addTrack(track, localStream));
     }
@@ -63,11 +63,11 @@ function createPeerConnection(channel) {
     };
 
     peer.ontrack = (event) => {
-        console.log("Received remote track:", event.streams[0]); // Debugging
+        console.log("Received remote track:", event.streams[0]);
         const remoteAudio = new Audio();
         remoteAudio.srcObject = event.streams[0];
         remoteAudio.autoplay = true;
-        document.body.appendChild(remoteAudio); // Ensure it plays
+        document.body.appendChild(remoteAudio); 
     };
 
     peerConnections[channel] = peer;
@@ -83,7 +83,7 @@ function leaveVoiceChannel() {
     }
 
     if (localStream) {
-        localStream.getTracks().forEach(track => track.stop()); // Stop audio stream
+        localStream.getTracks().forEach(track => track.stop());
     }
 
     document.getElementById("status").innerText = "Disconnected";
