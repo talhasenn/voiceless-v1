@@ -12,7 +12,7 @@ wss.on("connection", (ws) => {
             clients[data.channel].push(ws);
         }
 
-        // Broadcast WebRTC messages (offer/answer/ICE candidates)
+        
         if (["offer", "answer", "candidate"].includes(data.type)) {
             clients[data.channel].forEach(client => {
                 if (client !== ws) client.send(JSON.stringify(data));
