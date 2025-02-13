@@ -3,10 +3,14 @@ const wss = new WebSocket.Server({ port: 8080 });
 
 let clients = {};
 
-wss.on("connection", (ws) => {
-    ws.on("message", (message) => {
-        const data = JSON.parse(message);
+wss.on('connection', (ws) => {
+  ws.on('message', (message) => {
+   
+    console.log(`received: ${message}`);
+    ws.send('Message received');
+  });
 
+ master
         if (data.type === "join") {
             if (!clients[data.channel]) clients[data.channel] = [];
             clients[data.channel].push(ws);
@@ -20,6 +24,9 @@ wss.on("connection", (ws) => {
     });
 
     ws.send('Welcome to the WebSocket server!');
+
+  ws.send('Welcome to the WebSocket server!');
+ main
 });
 
 
