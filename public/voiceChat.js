@@ -89,12 +89,18 @@ function leaveVoiceChannel() {
     document.getElementById("status").innerText = "Disconnected";
 }
 
-function toggleMute() {
-    if (localStream) {
-        const audioTrack = localStream.getAudioTracks()[0];
-        if (audioTrack) {
-            audioTrack.enabled = !audioTrack.enabled;
-            console.log(`Microphone ${audioTrack.enabled ? 'unmuted' : 'muted'}`);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const muteButton = document.getElementById("muteButton");
+
+    muteButton.addEventListener("click", () => {
+        if (localStream) {
+            const audioTrack = localStream.getAudioTracks()[0];
+            if (audioTrack) {
+                audioTrack.enabled = !audioTrack.enabled;
+                muteButton.innerText = audioTrack.enabled ? "Mute" : "Unmute";
+                console.log(`Microphone ${audioTrack.enabled ? 'unmuted' : 'muted'}`);
+            }
         }
-    }
-}
+    });
+});

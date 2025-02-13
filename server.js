@@ -22,3 +22,17 @@ wss.on("connection", (ws) => {
 
     ws.send('Welcome to the WebSocket server!');
 });
+
+// Ensure localStream is initialized
+let localStream;
+
+async function startMedia() {
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+        console.log("Microphone access granted.");
+    } catch (error) {
+        console.error("Error accessing microphone:", error);
+    }
+}
+
+startMedia();
