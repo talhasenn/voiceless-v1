@@ -51,7 +51,10 @@ function createPeerConnection(channel) {
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
     });
 
-   
+ master
+
+
+    main
     if (localStream) {
         localStream.getTracks().forEach(track => peer.addTrack(track, localStream));
     }
@@ -67,7 +70,11 @@ function createPeerConnection(channel) {
         const remoteAudio = new Audio();
         remoteAudio.srcObject = event.streams[0];
         remoteAudio.autoplay = true;
+ master
+        document.body.appendChild(remoteAudio);
+
         document.body.appendChild(remoteAudio); 
+ main
     };
 
     peerConnections[channel] = peer;
@@ -88,3 +95,19 @@ function leaveVoiceChannel() {
 
     document.getElementById("status").innerText = "Disconnected";
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const muteButton = document.getElementById("muteButton");
+
+    muteButton.addEventListener("click", () => {
+        if (localStream) {
+            const audioTrack = localStream.getAudioTracks()[0];
+            if (audioTrack) {
+                audioTrack.enabled = !audioTrack.enabled;
+                muteButton.innerText = audioTrack.enabled ? "Mute" : "Unmute";
+                console.log(`Microphone ${audioTrack.enabled ? 'unmuted' : 'muted'}`);
+            }
+        }
+    });
+});
