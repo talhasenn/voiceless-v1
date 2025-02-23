@@ -1,1 +1,1 @@
-Basic voice chat app via WebSocket.
+Basic voice chat app via WebRTC.
